@@ -1,73 +1,74 @@
 package com.revs.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDate;
+import lombok.*;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "addresses")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // MANY ADDRESS BELONGS TO ONE USER
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "user_id",
-            nullable = false
-    )
+    // MANY ADDRESSES RECORDS RELATE TO USERS THROUGH USER_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private Users user;
 
-    @Column(name = "recipient_name", length = 150, nullable = false)
+    @Column(name = "recipient_name", nullable = false, length = 150)
     private String recipientName;
 
-
-    @Column(length = 50, nullable = false)
+    @Column(name = "phone", nullable = false, length = 50)
     private String phone;
 
-    @Column(name="address_line_one", nullable = false, length = 255)
-    private String addressLineOne;
+    @Column(name = "address_line1", nullable = false, length = 255)
+    private String addressLine1;
 
-    @Column(name = "address_line_two", nullable = true, length = 255)
-    private String addressLineTwo;
+    @Column(name = "address_line2", nullable = true, length = 255)
+    private String addressLine2;
 
-    @Column(name="barangay", nullable = true, length = 255)
+    @Column(name = "barangay", nullable = true, length = 100)
     private String barangay;
 
-    @Column(name="city", nullable = false, length = 255)
+    @Column(name = "city", nullable = false, length = 100)
     private String city;
 
-    @Column(name="province", nullable = false, length = 255)
+    @Column(name = "province", nullable = false, length = 100)
     private String province;
 
-    @Column(name="postal_code", nullable = false, length = 255)
-    private Integer postalCode;
+    @Column(name = "postal_code", nullable = true, length = 20)
+    private String postalCode;
 
-    @Column(name="country", nullable = false, length = 255)
-    private String country;
+    @Column(name = "country", nullable = false, length = 100)
+    private String country = "Philippines";
 
-    @Column(name = "is_default")
-    private Boolean isDefault;
+    @Column(name = "is_default", nullable = false)
+    private boolean isDefault = false;
 
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name="created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
     @PrePersist
-    private void onCreate(){
-        if(createdAt == null){
-            createdAt = LocalDateTime.now();
-        }
+    protected void onCreate() {
+        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (updatedAt == null) updatedAt = LocalDateTime.now();
     }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }

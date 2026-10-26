@@ -1,22 +1,14 @@
 package com.revs.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.revs.ecommerce.models.enums.Status;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,68 +18,99 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name", nullable = false, length = 100)
+    @Column(name = "first_name", nullable = false, length = 150)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 100)
+    @Column(name = "last_name", nullable = false, length = 150)
     private String lastName;
 
-    @Column(name = "email", nullable = false, length = 150, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 200)
+    @JsonIgnore
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
     @Column(name = "contact", nullable = true, length = 50)
     private String phone;
 
+    @Column(name = "status", nullable = false, length = 30)
+    private String status = "ACTIVE";
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="status", nullable = false)
-    private Status status;
-
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name="email_verified_at")
+    @Column(name = "email_verified_at", nullable = true)
     private LocalDateTime emailVerifiedAt;
 
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate(){
-        LocalDateTime now  = LocalDateTime.now();
-        if(createdAt == null){
-            createdAt = now;
-        }
-        if (updatedAt == null){
-            updatedAt = now;
-        }
-    }
-
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @PreUpdate
-    protected void onUpdate(){
-        this.updatedAt = LocalDateTime.now();
-    }
-
-
-    @ManyToMany
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id") )
+    // MANY USERS CAN HAVE MANY ROLES
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnore
     private Set<Roles> roles = new HashSet<>();
 
-    // ONE USER CAN HAVE MANY ADDRESS
-    @OneToMany(mappedBy = "user")
+    // INVERSE RELATIONSHIP TO ADDRESSES
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Addresses> addresses = new ArrayList<>();
 
-    // ONE USER
-    @OneToMany(mappedBy = "user")
-    private Set<AuthTokens> authTokens = new HashSet<>();
+    // INVERSE RELATIONSHIP TO AUTHTOKENS
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<AuthTokens> authTokens = new ArrayList<>();
 
-    // ONE USER HAS MANY INVENTORY MOVEMENTS
-    @OneToMany(mappedBy = "users")
+    // INVERSE RELATIONSHIP TO CARTS
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Carts cart;
+
+    // INVERSE RELATIONSHIP TO WISHLISTS
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Wishlists wishlist;
+
+    // INVERSE RELATIONSHIP TO ORDERS
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Orders> orders = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO INVENTORYMOVEMENTS
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<InventoryMovements> inventoryMovements = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO COUPONUSAGES
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<CouponUsages> couponUsages = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO PRODUCTREVIEWS
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ProductReviews> reviews = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO AUDITLOGS
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<AuditLogs> auditLogs = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO ORDERSTATUSHISTORY
+    @OneToMany(mappedBy = "changedByUser", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<OrderStatusHistory> orderStatusChanges = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (updatedAt == null) updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }

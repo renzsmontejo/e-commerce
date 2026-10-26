@@ -1,13 +1,11 @@
 package com.revs.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "product_variants")
@@ -20,55 +18,67 @@ public class ProductVariants {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // MANY PRODUCT VARIANTS BELONG TO ONE PRODUCT
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Products products;
+    // MANY PRODUCTVARIANTS RECORDS RELATE TO PRODUCTS THROUGH PRODUCT_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
+    private Products product;
 
-    // ONE PRODUCT VARIANT HAS MANY IMAGES
-    @OneToMany(mappedBy = "productVariants")
-    private List<ProductImages> productImages = new ArrayList<>();
-
-    // ONE PRODUCT VARIANT HAS MANY INVENTORY MOVEMENT
-    @OneToMany(mappedBy = "productVariants")
-    private List<InventoryMovements> inventoryMovements = new ArrayList<>();
-
-
-    @Column(name = "sku", length = 100, unique = true, nullable = false)
+    @Column(name = "sku", nullable = false, unique = true, length = 100)
     private String sku;
 
-    @Column(name = "variant_name", length = 50)
-    private String variantName;
-
-    @Column(name="color", nullable = true)
-    private String color;
-
-    @Column(name = "size", nullable = false)
-    private String size;
-
-    @Column(name = "price", nullable = false)
+    @Column(name = "price", nullable = false, precision = 12, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "compare_at_price", nullable = true)
+    @Column(name = "compare_at_price", nullable = true, precision = 12, scale = 2)
     private BigDecimal compareAtPrice;
 
-    @Column(name = "stock_quantity", nullable = false)
-    private Integer stockQuantity;
+    @Column(name = "weight_grams", nullable = true)
+    private Integer weightGrams;
 
-    @Column(name = "low_stock_threshold")
-    private Integer lowStockThreshold;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
 
-    @Column(name = "status", length = 20)
-    private String status;
-
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    // INVERSE RELATIONSHIP TO PRODUCTIMAGES
+    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ProductImages> images = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO CARTITEMS
+    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<CartItems> cartItems = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO ORDERITEMS
+    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<OrderItems> orderItems = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO VARIANTATTRIBUTEVALUES
+    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<VariantAttributeValues> attributeValues = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO INVENTORIES
+    @OneToOne(mappedBy = "variant", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Inventories inventory;
+
     @PrePersist
-    protected void onCreate(){
-        if(createdAt == null){
-            createdAt = LocalDateTime.now();
-        }
+    protected void onCreate() {
+        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (updatedAt == null) updatedAt = LocalDateTime.now();
     }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }

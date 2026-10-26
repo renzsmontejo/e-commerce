@@ -1,72 +1,86 @@
 package com.revs.ecommerce.models;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "products")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // MANY PRODUCTS BELONG TO ONE CATEGORY
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Categories categories;
+    // MANY PRODUCTS RECORDS RELATE TO CATEGORIES THROUGH CATEGORY_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
+    private Categories category;
 
-    // ONE PRODUCT HAS MANY VARIANTS
-    @OneToMany(mappedBy = "products")
-    private List<ProductVariants> productVariants = new ArrayList<>();
+    // MANY PRODUCTS RECORDS RELATE TO BRANDS THROUGH BRAND_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "brand_id", nullable = true)
+    @JsonIgnore
+    private Brands brand;
 
-    // ONE PRODUCT HAS MANY IMAGES
-    @OneToMany(mappedBy = "products")
-    private List<ProductImages> productImages = new ArrayList<>();
+    @Column(name = "name", nullable = false, length = 200)
+    private String name;
 
-    @Column(name = "slug", unique = true)
+    @Column(name = "slug", nullable = false, unique = true, length = 255)
     private String slug;
 
-    @Column(name="description", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "description", nullable = true, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "brand", nullable = false, length = 100)
-    private String brand;
-
     @Column(name = "status", nullable = false, length = 30)
-    private String status;
+    private String status = "ACTIVE";
 
-    @Column(name = "is_featured", nullable=false)
-    private Boolean isFeatured = true;
-
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name = "created_at", updatable=false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @JsonFormat(pattern = "MM-dd-yyyy HH-mm-ss")
-    @Column(name = "updated_at", updatable = true)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // INVERSE RELATIONSHIP TO PRODUCTIMAGES
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ProductImages> images = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO PRODUCTVARIANTS
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ProductVariants> variants = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO WISHLISTITEMS
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<WishlistItems> wishlistItems = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO PRODUCTREVIEWS
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ProductReviews> reviews = new ArrayList<>();
+
+    // INVERSE RELATIONSHIP TO PRODUCTATTRIBUTEASSIGNMENTS
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ProductAttributeAssignments> attributeAssignments = new ArrayList<>();
+
     @PrePersist
-    protected void onCreate(){
-        LocalDateTime now = LocalDateTime.now();
-        if(createdAt == null){
-            createdAt = now;
-        }
-        if(updatedAt == null){
-            updatedAt = now;
-        }
+    protected void onCreate() {
+        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (updatedAt == null) updatedAt = LocalDateTime.now();
     }
+
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
 

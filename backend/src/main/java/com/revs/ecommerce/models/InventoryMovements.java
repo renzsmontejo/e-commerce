@@ -1,52 +1,57 @@
 package com.revs.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
-@Table(name="inventory_movements")
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "inventory_movements")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class InventoryMovements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // MANY INVENTORY MOVEMENT BELONGS TO ONE PRODUCT VARIANT
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "variant_id")
-    private ProductVariants productVariants;
+    // MANY INVENTORYMOVEMENTS RECORDS RELATE TO INVENTORIES THROUGH INVENTORY_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "inventory_id", nullable = false)
+    @JsonIgnore
+    private Inventories inventory;
 
-    // MANY INVENTORY MOVEMENT BELONGS TO ONE USER
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "actor_id")
-    private Users users;
+    // MANY INVENTORYMOVEMENTS RECORDS RELATE TO USERS THROUGH USER_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "user_id", nullable = true)
+    @JsonIgnore
+    private Users user;
 
-    @Column(name = "quantity_change")
+    // MANY INVENTORYMOVEMENTS RECORDS RELATE TO ORDERS THROUGH ORDER_ID
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "order_id", nullable = true)
+    @JsonIgnore
+    private Orders order;
+
+    @Column(name = "movement_type", nullable = false, length = 50)
+    private String movementType;
+
+    @Column(name = "quantity_change", nullable = false)
     private Integer quantityChange;
 
-    @Column(name = "reason", length = 100)
+    @Column(name = "reason", nullable = true, columnDefinition = "TEXT")
     private String reason;
 
-    @Column(name = "reference_type", length = 50)
-    private String referenceType;
-
-    @Column(name = "reference_id")
-    private Long referencedId;
-
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
-    protected void onCreate(){
-        if(createdAt == null){
-            createdAt = LocalDateTime.now();
-        }
+    protected void onCreate() {
+        if (quantityChange == null || quantityChange == 0) throw new IllegalStateException("Movement quantity must not be zero");
+        if (createdAt == null) createdAt = LocalDateTime.now();
     }
+
 }

@@ -1,36 +1,40 @@
 package com.revs.ecommerce.models;
 
-import com.revs.ecommerce.models.enums.URoles;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.catalina.User;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Roles {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(nullable = true, length = 255)
+    @Column(name = "description", nullable = true, columnDefinition = "TEXT")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "u_roles", nullable = false)
-    private URoles role;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    @ManyToMany(mappedBy = "roles")
+    // MANY ROLES CAN BELONG TO MANY USERS
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Users> users = new HashSet<>();
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) createdAt = LocalDateTime.now();
+    }
+
 }

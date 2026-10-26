@@ -21,6 +21,8 @@
 
     <properties>
         <java.version>27</java.version>
+        <!-- Latest Connector/J release; other dependencies follow Spring Boot's BOM. -->
+        <mysql.version>26.10.0</mysql.version>
     </properties>
 
     <dependencies>
@@ -116,8 +118,11 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
 
