@@ -1,0 +1,17 @@
+.\mvnw.cmd -U clean verify
+
+
+JWT signing key
+
+
+Running the application requires `APP_JWT_SECRET`, a Base64-encoded random
+key of at least 32 bytes. For a local PowerShell session, run this from `backend`:
+
+```powershell
+$jwtKey = New-Object byte[] 32
+$jwtRandom = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+$jwtRandom.GetBytes($jwtKey)
+$jwtRandom.Dispose()
+$env:APP_JWT_SECRET = [Convert]::ToBase64String($jwtKey)
+.\mvnw.cmd spring-boot:run
+```

@@ -21,6 +21,7 @@
 
     <properties>
         <java.version>27</java.version>
+        <jjwt.version>0.13.0</jjwt.version>
         <!-- Latest Connector/J release; other dependencies follow Spring Boot's BOM. -->
         <mysql.version>26.10.0</mysql.version>
     </properties>
@@ -43,6 +44,25 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- JSON WEB TOKENS -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- VALIDATION -->
