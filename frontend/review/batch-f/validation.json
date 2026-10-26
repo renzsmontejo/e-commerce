@@ -1,0 +1,68 @@
+{
+  "verifiedAt": "2026-10-26T23:59:06+08:00",
+  "timezone": "Asia/Shanghai",
+  "versions": {
+    "node": "v22.13.1",
+    "angular": "21.2.25",
+    "typescript": "5.9.3"
+  },
+  "backend": {
+    "command": "mvnw.cmd -o verify -Dspring.jpa.hibernate.ddl-auto=none -Dspring.jpa.show-sql=false -Dlogging.level.org.springframework.security=INFO",
+    "result": "passed",
+    "suites": [
+      {
+        "name": "com.revs.ecommerce.ECommerceApplicationTests",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.revs.ecommerce.security.AuthenticationSecurityTests",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.revs.ecommerce.security.LoginServiceTests",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.revs.ecommerce.security.RegistrationServiceTests",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  "frontend": {
+    "productionBuild": "passed",
+    "tests": 25,
+    "testFailures": 0,
+    "formatting": "passed",
+    "lint": "no configured task",
+    "browserEvidence": "../batch-e/dom-audit.json"
+  },
+  "artifacts": [
+    {
+      "path": "backend/target/e-commerce-0.0.1-SNAPSHOT.jar",
+      "bytes": 61173557,
+      "sha256": "bdd49cb22f34fdde69b55a919080da7396f3fc136f3da889f032f2a64e228e1d"
+    },
+    {
+      "path": "frontend/dist/frontend/browser/index.html",
+      "bytes": 1499,
+      "sha256": "03f5122eb04652a74768f21fd05cf57578ded210ae93dbe395b62e39b2a631b2"
+    }
+  ],
+  "containers": {
+    "java27JdkManifest": "verified",
+    "java27JreManifest": "verified",
+    "builds": "not run"
+  }
+}

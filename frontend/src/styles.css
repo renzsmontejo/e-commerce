@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import './styles/tokens.css';
+@import './styles/login-font.css';
+@import './styles/forms.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+a {
+  color: var(--color-primary);
+  text-underline-offset: 0.2em;
+}
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+h1 {
+  line-height: 1.2;
+}
+p {
+  color: var(--color-muted);
+}
+img {
+  max-width: 100%;
+  height: auto;
+}

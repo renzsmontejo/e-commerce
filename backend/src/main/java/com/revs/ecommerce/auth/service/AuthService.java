@@ -3,8 +3,8 @@ package com.revs.ecommerce.auth.service;
 
 import java.util.Locale;
 
-import com.revs.ecommerce.auth.dto.RegisterResponse;
 import com.revs.ecommerce.repositories.RolesRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,15 +60,12 @@ public class AuthService {
                 user.getPasswordHash()
         );
 
-        if (!passwordMatches) {
+        if (!passwordMatches || !"ACTIVE".equals(user.getStatus())) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
                     "Invalid email or password"
             );
         }
-
-        // TODO: Check your existing user status field
-        // and reject disabled or locked accounts.
 
         String token = jwtService.generateToken(user);
 
@@ -122,7 +119,20 @@ public class AuthService {
         // createdAt and updatedAt are handled
         // automatically by @PrePersist in Users.java.
 
-        Users savedUser = usersRepository.save(user);
+        Users savedUser;
+        try {
+            savedUser = usersRepository.saveAndFlush(user);
+        } catch (DataIntegrityViolationException exception) {
+            // A concurrent registration can win after the email pre-check.
+            Throwable cause = exception;
+            while (cause != null) {
+                if (cause instanceof java.sql.SQLException sql && sql.getErrorCode() == 1062) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already registered");
+                }
+                cause = cause.getCause();
+            }
+            throw exception;
+        }
 
         return new RegisterResponse(
                 savedUser.getId(),

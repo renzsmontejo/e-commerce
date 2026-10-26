@@ -1,0 +1,267 @@
+:host {
+  display: block;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.registration-link {
+  margin: var(--space-5) 0 0;
+  font-size: 0.875rem;
+  text-align: center;
+}
+.registration-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-min-height);
+  font-weight: 600;
+}
+.login-layout {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+.welcome {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  background: #eae7e2;
+  display: flex;
+  flex-direction: column;
+}
+.welcome-copy {
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 3.5vw, 3rem) var(--space-6);
+}
+.eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+h2 {
+  margin: 0 0 var(--space-5);
+  font-size: clamp(2.5rem, 3.1vw, 2.75rem);
+  font-weight: 650;
+  line-height: 1.16;
+}
+h2 span {
+  color: var(--color-primary);
+}
+.welcome-description {
+  color: #343a44;
+  margin: 0;
+}
+.benefits {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-6) 0 0;
+}
+.benefits li {
+  display: grid;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.benefits svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #113851;
+}
+/* CSS window onto the sofa in the supplied storefront screenshot: x103/y354/w586/h198.
+   Keep the original reference asset intact; no screenshot UI appears inside this crop. */
+.lifestyle {
+  position: relative;
+  aspect-ratio: 586 / 198;
+  overflow: hidden;
+  margin-top: auto;
+}
+.lifestyle img {
+  position: absolute;
+  width: 188.4%;
+  max-width: none;
+  height: auto;
+  left: -17.58%;
+  top: -178.79%;
+}
+.visual-caption {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #41434a;
+  text-align: center;
+}
+.form-panel {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+.form-card {
+  width: 100%;
+  max-width: 24rem;
+}
+.form-eyebrow {
+  color: var(--color-primary);
+}
+h1 {
+  margin: 0 0 var(--space-3);
+  font-size: clamp(1.625rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.form-description {
+  margin: 0 0 1.75rem;
+}
+.auth-form label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.auth-form input {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.auth-form input::placeholder {
+  font-size: 0.875rem;
+}
+.field-error,
+.authentication-error {
+  font-size: 0.8125rem;
+  color: var(--color-error);
+  margin: var(--space-2) 0 0;
+}
+.authentication-error {
+  margin-bottom: var(--space-4);
+}
+.sign-in {
+  width: 100%;
+  min-height: var(--control-min-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-primary);
+  color: var(--color-on-dark);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+.sign-in:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+.sign-in:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+.submission-status {
+  font-size: 0.8125rem;
+  margin: var(--space-3) 0 0;
+}
+.submission-status:empty {
+  margin: 0;
+}
+.account-note {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+.spinner {
+  height: 1rem;
+  width: 1rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .welcome-copy {
+    padding: var(--space-6) var(--space-5);
+  }
+  .form-panel {
+    padding: var(--space-6) var(--space-5);
+  }
+  .desktop-break {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .login-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .form-panel {
+    grid-column: 1;
+    grid-row: 1;
+    padding: var(--space-6) var(--space-5);
+  }
+  .welcome {
+    grid-row: 2;
+  }
+  .welcome-copy {
+    padding: var(--space-5);
+  }
+  h2 {
+    font-size: clamp(1.75rem, 7.5vw, 2rem);
+  }
+  h1 {
+    font-size: clamp(1.375rem, 6.4vw, 1.625rem);
+  }
+  .desktop-break,
+  .lifestyle,
+  .visual-caption {
+    display: none;
+  }
+  .benefits {
+    margin-top: var(--space-5);
+  }
+}
+@media (max-width: 374px) {
+  .form-panel,
+  .welcome-copy {
+    padding: var(--space-5) var(--space-4);
+  }
+}

@@ -1,1 +1,58 @@
 docker exec ecommerce-mysql mysqldump -u ecommerce_user -pPassword@123 --single-transaction ecommerce_db > ecommerce_db.sql
+
+
+
+Rebuild your Docker frontend
+If you prefer to see the updated login page on http://localhost:4200/login, rebuild your existing frontend image.
+
+Since you don't have a Docker Compose file, use Docker directly.
+Step 1 — Build the updated image
+From your project root:
+cd C:\Users\rens\pers-web\e-commerce
+
+
+Run:
+docker build -t ecommerce-frontend:updated ./frontend
+
+
+Wait until the build completes successfully.
+Step 2 — Inspect the existing container configuration
+Before replacing the running container, inspect its network and mounts:
+docker inspect ecommerce-frontend --format '{{json .NetworkSettings.Networks}}'
+
+
+docker inspect ecommerce-frontend --format '{{json .Mounts}}'
+
+
+This matters because your frontend may depend on a custom Docker network or mounted configuration.
+Step 3 — Replace the frontend container
+Only after confirming the new image builds successfully and you've checked the container configuration, you can recreate the frontend container with the same networking and configuration.
+
+Do not remove your MySQL container.
+
+For a simple frontend without custom mounts or environment settings, the replacement commands would be:
+docker stop ecommerce-frontend
+docker rename ecommerce-frontend ecommerce-frontend-old
+docker run -d --name ecommerce-frontend -p 4200:80 ecommerce-frontend:updated
+
+
+If your existing container uses a custom network, mounts, or environment variables, those must also be preserved in the new docker run command.
+
+Once the updated container works, you can remove the old stopped container later.
+
+Which should you use?
+Feature	Angular development	Docker
+Browser port	4201	4200
+Automatic reload	Yes	No, normally
+Requires rebuilding image	No	Yes
+Best for Codex UI changes	Yes	Not ideal
+Tests production-style serving	No	Yes
+
+My recommendation: Use Option 1 for now. You're still developing the login page, so there's no need to rebuild Docker every time Codex makes a change.
+
+Run:
+cd C:\Users\rens\pers-web\e-commerce\frontend
+npx ng serve --port 4201 --open
+
+
+Then visit **http://localhost:4201/login**.

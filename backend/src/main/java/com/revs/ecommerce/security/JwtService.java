@@ -40,4 +40,13 @@ public class JwtService {
                 .signWith(signingKey)
                 .compact();
     }
+
+    public Long validateAndGetUserId(String token) {
+        var claims = Jwts.parser().verifyWith(signingKey).build()
+                .parseSignedClaims(token).getPayload();
+        if (claims.getExpiration() == null) {
+            throw new IllegalArgumentException("Token expiration is required");
+        }
+        return Long.valueOf(claims.getSubject());
+    }
 }

@@ -27,10 +27,19 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request
     ) {
-        System.out.println("LOGIN ENDPOINT REACHED: " + request.email());
         LoginResponse response = authService.login(request);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/me")
+    public com.revs.ecommerce.auth.dto.CurrentUserResponse currentUser(
+            org.springframework.security.core.Authentication authentication) {
+        var user = (com.revs.ecommerce.models.Users) authentication.getPrincipal();
+        var roles = authentication.getAuthorities().stream()
+                .map(authority -> authority.getAuthority().substring("ROLE_".length()))
+                .sorted().toList();
+        return new com.revs.ecommerce.auth.dto.CurrentUserResponse(user.getId(), user.getEmail(), roles);
     }
 
 

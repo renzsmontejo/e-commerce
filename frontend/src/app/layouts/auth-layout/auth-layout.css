@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+.auth-header {
+  background: var(--color-header);
+  color: var(--color-on-dark);
+}
+.header-inner {
+  width: min(100% - 2 * var(--space-5), var(--content-max));
+  margin-inline: auto;
+  padding-block: var(--space-5);
+}
+.brand {
+  display: inline-block;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.brand span {
+  display: block;
+}
+.auth-content {
+  width: min(100% - 2 * var(--space-5), var(--content-max));
+  margin-inline: auto;
+  padding-block: clamp(1.5rem, 5vw, 4rem);
+}
+.skip-link {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  transform: translateY(-200%);
+  z-index: 1;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}

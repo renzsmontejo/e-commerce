@@ -1,59 +1,68 @@
-# Frontend
+# We Shop Smarter frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.28.
+Angular 21 standalone authentication UI with lazy-loaded routes and the existing
+CSS styling system. No additional UI framework is used.
 
-## Development server
+## Run locally
 
-To start a local development server, run:
+Start the Spring Boot backend on port 8080 first (see the root README for JDK,
+MySQL, signing-key and migration instructions). From this folder:
 
-```bash
-ng serve
+```powershell
+npm ci
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://127.0.0.1:4200/auth/login`. The development server proxies `/api/**`
+to `http://localhost:8080`, so no cross-origin configuration is needed locally.
 
-## Code scaffolding
+| Route | Behavior |
+| --- | --- |
+| `/auth/login` | Email/password login with validation and safe return destination |
+| `/auth/register` | CUSTOMER registration, confirmation and sign-in link |
+| `/account` | Guarded current user/roles and sign-out |
+| `/` or unknown path | Redirects to login; an active session continues to account |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+A persistent backend signing key is required outside temporary local testing.
+No credentials are hardcoded in this frontend. Use an existing account or register
+a CUSTOMER. ADMIN creation remains an administrative database operation.
 
-```bash
-ng generate component component-name
+## Verify
+
+```powershell
+npm run build
+npm test -- --watch=false
+npx --no-install prettier --check src/app src/styles src/styles.css proxy.conf.json angular.json
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The production output is `dist/frontend/browser`. There is no lint script and no
+configured `ng e2e` target. Browser checks were performed through the in-app browser;
+the reports describe exactly what was checked and what remains unverified.
 
-```bash
-ng generate --help
-```
+## API and session behavior
 
-## Building
+- `POST /api/auth/login` returns a bearer token; `GET /api/auth/me` confirms it
+  before the frontend establishes a session.
+- `POST /api/auth/register` creates a CUSTOMER and returns registration details.
+  It does not log the user in automatically.
+- Tokens and user state live only in memory. Refresh requires signing in again.
+- Logout clears client state. Server tokens remain valid until their 15-minute expiry.
+- The interceptor scopes bearer headers to the configured API and handles matching
+  session 401/403 responses without refresh loops.
+- Environment files supply `/api`; the deployment proxy selects the actual backend.
+- Recovery/reset, social providers and persistent sign-in have no backend support
+  and are omitted from the UI.
 
-To build the project run:
+## Build container
 
-```bash
-ng build
-```
+The frontend Dockerfile builds using Node 22 and serves through Nginx. The
+`.dockerignore` keeps host dependencies and review screenshots out of the build
+context. Nginx expects `ecommerce-backend:8080` on its container network and falls
+back to index.html for Angular deep links. Container builds are separate from the
+verified local Angular build; consult the final report for container limitations.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Review materials
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+`AUTH_ARCHITECTURE.md` documents the structure and configuration. `review/batch-b/`
+through `review/batch-e/` contain implementation reports and screenshots. The final
+handover and verification results are in `review/batch-f/REPORT.md`.

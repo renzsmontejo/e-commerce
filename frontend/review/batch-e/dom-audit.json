@@ -1,0 +1,656 @@
+{
+  "pages": [
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 44
+        },
+        {
+          "height": 45,
+          "name": "Sign in",
+          "visible": true,
+          "width": 384
+        },
+        {
+          "height": 44,
+          "name": "Sign up",
+          "visible": true,
+          "width": 48
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "login-title",
+      "h1Count": 1,
+      "headings": [
+        "H1",
+        "H2"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/login",
+      "width": 1440
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 44
+        },
+        {
+          "height": 45,
+          "name": "Sign in",
+          "visible": true,
+          "width": 384
+        },
+        {
+          "height": 44,
+          "name": "Sign up",
+          "visible": true,
+          "width": 48
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "login-title",
+      "h1Count": 1,
+      "headings": [
+        "H1",
+        "H2"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/login",
+      "width": 1024
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 44
+        },
+        {
+          "height": 45,
+          "name": "Sign in",
+          "visible": true,
+          "width": 298
+        },
+        {
+          "height": 44,
+          "name": "Sign up",
+          "visible": true,
+          "width": 48
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "login-title",
+      "h1Count": 1,
+      "headings": [
+        "H1",
+        "H2"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/login",
+      "width": 768
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 44
+        },
+        {
+          "height": 45,
+          "name": "Sign in",
+          "visible": true,
+          "width": 263
+        },
+        {
+          "height": 44,
+          "name": "Sign up",
+          "visible": true,
+          "width": 48
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "login-title",
+      "h1Count": 1,
+      "headings": [
+        "H1",
+        "H2"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/login",
+      "width": 375
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 44
+        },
+        {
+          "height": 45,
+          "name": "Sign in",
+          "visible": true,
+          "width": 223
+        },
+        {
+          "height": 44,
+          "name": "Sign up",
+          "visible": true,
+          "width": 48
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "login-title",
+      "h1Count": 1,
+      "headings": [
+        "H1",
+        "H2"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/login",
+      "width": 320
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Hide password",
+          "visible": true,
+          "width": 44
+        },
+        {
+          "height": 45,
+          "name": "Sign in",
+          "visible": true,
+          "width": 223
+        },
+        {
+          "height": 44,
+          "name": "Sign up",
+          "visible": true,
+          "width": 48
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "email",
+      "h1Count": 1,
+      "headings": [
+        "H1",
+        "H2"
+      ],
+      "inputBorderContrast": 6.57,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/login",
+      "width": 320
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 50
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 50
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 495
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 43
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-title",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 1440
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 50
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 50
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 495
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 43
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-title",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 1024
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 50
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 50
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 513
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 43
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-title",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 768
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 47
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 47
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 279
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 43
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-title",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 375
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 45
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 45
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 223
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 43
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-title",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 320
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 45
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 45
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 223
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 43
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-firstName",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 6.57,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 320
+    },
+    {
+      "actions": [
+        {
+          "height": 48,
+          "name": "Skip to main content",
+          "visible": false,
+          "width": 169
+        },
+        {
+          "height": 44,
+          "name": "Show password",
+          "visible": true,
+          "width": 45
+        },
+        {
+          "height": 44,
+          "name": "Show confirmed password",
+          "visible": true,
+          "width": 45
+        },
+        {
+          "height": 45,
+          "name": "Create account",
+          "visible": true,
+          "width": 223
+        },
+        {
+          "height": 44,
+          "name": "Sign in",
+          "visible": true,
+          "width": 51
+        }
+      ],
+      "brokenDescriptions": [],
+      "duplicateIds": [],
+      "focused": "register-title",
+      "h1Count": 1,
+      "headings": [
+        "H1"
+      ],
+      "inputBorderContrast": 3.22,
+      "labelContrast": 17.74,
+      "liveRegionsInsideBusyForms": 0,
+      "mainCount": 1,
+      "overflow": false,
+      "unlabelledInputs": [],
+      "url": "/auth/register",
+      "width": 320,
+      "phase": "after-touch-target-fix"
+    }
+  ],
+  "loginKeyboardTrace": [
+    {
+      "describedBy": null,
+      "focus": "email",
+      "passwordType": "password"
+    },
+    {
+      "describedBy": null,
+      "focus": "password",
+      "passwordType": "password"
+    },
+    {
+      "describedBy": null,
+      "focus": "Show password",
+      "passwordType": "password"
+    },
+    {
+      "describedBy": null,
+      "focus": "Hide password",
+      "passwordType": "text"
+    },
+    {
+      "describedBy": null,
+      "focus": "Sign in",
+      "passwordType": "text"
+    },
+    {
+      "describedBy": "email-error",
+      "focus": "email",
+      "passwordType": "text"
+    }
+  ],
+  "shortViewport": {
+    "width": 375,
+    "height": 360,
+    "focusedToggleVisible": true,
+    "horizontalOverflow": false
+  },
+  "account": {
+    "width": 320,
+    "mainCount": 1,
+    "headingFocus": true,
+    "horizontalOverflow": false
+  }
+}

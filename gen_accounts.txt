@@ -1,0 +1,2 @@
+email: admin@example.com
+password: 1idqN1mY60Kur2KhGxT535Rm

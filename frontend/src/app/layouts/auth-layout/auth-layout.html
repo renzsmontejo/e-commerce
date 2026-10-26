@@ -1,0 +1,11 @@
+<a class="skip-link" href="#auth-content" (click)="$event.preventDefault(); content.focus()"
+  >Skip to main content</a
+>
+<header class="auth-header">
+  <div class="header-inner">
+    <span class="brand">We Shop <span>Smarter</span></span>
+  </div>
+</header>
+<main #content id="auth-content" tabindex="-1" class="auth-content">
+  <router-outlet />
+</main>

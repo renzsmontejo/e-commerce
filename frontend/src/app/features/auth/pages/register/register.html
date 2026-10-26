@@ -1,0 +1,122 @@
+<section class="register-card" aria-labelledby="register-title">
+  @if (success()) {
+    <div class="success-mark" aria-hidden="true">✓</div>
+    <h1 id="register-title" #successHeading tabindex="-1">Your account is ready</h1>
+    <p role="status">Your account has been created. Sign in to start shopping.</p>
+    <a class="primary-link" [routerLink]="['/auth/login']" [queryParams]="{ returnUrl: returnUrl }"
+      >Continue to sign in</a
+    >
+  } @else {
+    <p class="eyebrow">Welcome to We Shop Smarter</p>
+    <h1 id="register-title">Create your account</h1>
+    <p class="intro">A few details, and you’re ready for your everyday favourites.</p>
+    <form
+      #formElement
+      class="auth-form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      [attr.aria-busy]="submitting()"
+      novalidate
+    >
+      <div class="field-grid">
+        @for (field of textFields; track field.key) {
+          <div class="field">
+            <label [for]="'register-' + field.key">{{ field.label }}</label>
+            <div class="input-wrap" [class.invalid]="fieldError(field.key)">
+              <input
+                [id]="'register-' + field.key"
+                [formControlName]="field.key"
+                [type]="field.type"
+                [autocomplete]="field.autocomplete"
+                [attr.autocapitalize]="field.key === 'email' ? 'none' : null"
+                [attr.spellcheck]="field.key === 'email' ? 'false' : null"
+                [attr.maxlength]="field.max"
+                [required]="field.key !== 'phone'"
+                [readOnly]="submitting()"
+                [attr.aria-invalid]="!!fieldError(field.key)"
+                [attr.aria-describedby]="fieldError(field.key) ? field.key + '-error' : null"
+              />
+            </div>
+            @if (fieldError(field.key)) {
+              <p class="field-error" [id]="field.key + '-error'">{{ fieldError(field.key) }}</p>
+            }
+          </div>
+        }
+      </div>
+      <div class="field">
+        <label for="register-password">Password</label>
+        <div class="input-wrap" [class.invalid]="fieldError('password')">
+          <input
+            id="register-password"
+            formControlName="password"
+            [type]="passwordVisible() ? 'text' : 'password'"
+            autocomplete="new-password"
+            required
+            [readOnly]="submitting()"
+            [attr.aria-invalid]="!!fieldError('password')"
+            [attr.aria-describedby]="
+              fieldError('password') ? 'password-help register-password-error' : 'password-help'
+            "
+          />
+          <button
+            class="password-toggle"
+            type="button"
+            (click)="passwordVisible.set(!passwordVisible())"
+            [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
+            [attr.aria-pressed]="passwordVisible()"
+            aria-controls="register-password"
+          >
+            {{ passwordVisible() ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        <p class="password-help" id="password-help">Use at least 8 characters.</p>
+        @if (fieldError('password')) {
+          <p class="field-error" id="register-password-error">{{ fieldError('password') }}</p>
+        }
+      </div>
+      <div class="field">
+        <label for="register-confirmPassword">Confirm password</label>
+        <div class="input-wrap" [class.invalid]="fieldError('confirmPassword')">
+          <input
+            id="register-confirmPassword"
+            formControlName="confirmPassword"
+            [type]="confirmVisible() ? 'text' : 'password'"
+            autocomplete="new-password"
+            required
+            [readOnly]="submitting()"
+            [attr.aria-invalid]="!!fieldError('confirmPassword')"
+            [attr.aria-describedby]="fieldError('confirmPassword') ? 'confirmPassword-error' : null"
+          />
+          <button
+            class="password-toggle"
+            type="button"
+            (click)="confirmVisible.set(!confirmVisible())"
+            [attr.aria-label]="
+              confirmVisible() ? 'Hide confirmed password' : 'Show confirmed password'
+            "
+            [attr.aria-pressed]="confirmVisible()"
+            aria-controls="register-confirmPassword"
+          >
+            {{ confirmVisible() ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        @if (fieldError('confirmPassword')) {
+          <p class="field-error" id="confirmPassword-error">{{ fieldError('confirmPassword') }}</p>
+        }
+      </div>
+      @if (error()) {
+        <p class="form-error" role="alert">{{ error() }}</p>
+      }
+      <button class="primary-button" type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Creating account…' : 'Create account' }}
+      </button>
+    </form>
+    <p class="loading-status" role="status">
+      {{ submitting() ? 'Creating your account. Please wait.' : '' }}
+    </p>
+    <p class="sign-in-link">
+      Already have an account?
+      <a [routerLink]="['/auth/login']" [queryParams]="{ returnUrl: returnUrl }">Sign in</a>
+    </p>
+  }
+</section>

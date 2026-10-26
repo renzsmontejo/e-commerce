@@ -1,6 +1,6 @@
 
 # STEP 1: BUILD SPRING BOOT
-FROM eclipse-temurin:25-jdk AS build
+FROM eclipse-temurin:27-jdk AS build
 
 WORKDIR /app
 
@@ -21,7 +21,7 @@ COPY src/ src/
 RUN ./mvnw clean package -DskipTests
 
 # STEP 2: RUN SPRING BOOT
-FROM eclipse-temurin:25-jre
+FROM eclipse-temurin:27-jre
 
 WORKDIR /app
 

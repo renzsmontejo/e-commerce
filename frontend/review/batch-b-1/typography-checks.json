@@ -1,0 +1,290 @@
+{
+  "widths": [
+    {
+      "body": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "button": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "600"
+      },
+      "caption": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "18px",
+        "size": "12px",
+        "weight": "400"
+      },
+      "formFirstOnMobile": false,
+      "heading": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "35px",
+        "size": "28px",
+        "weight": "600"
+      },
+      "input": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "22.5px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "interLoaded": true,
+      "label": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "21px",
+        "size": "14px",
+        "weight": "500"
+      },
+      "overflow": false,
+      "welcome": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "51.04px",
+        "size": "44px",
+        "weight": "650"
+      },
+      "width": 1440
+    },
+    {
+      "body": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "button": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "600"
+      },
+      "caption": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "18px",
+        "size": "12px",
+        "weight": "400"
+      },
+      "formFirstOnMobile": false,
+      "heading": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "32.5px",
+        "size": "26px",
+        "weight": "600"
+      },
+      "input": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "22.5px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "interLoaded": true,
+      "label": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "21px",
+        "size": "14px",
+        "weight": "500"
+      },
+      "overflow": false,
+      "welcome": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "46.4px",
+        "size": "40px",
+        "weight": "650"
+      },
+      "width": 1024
+    },
+    {
+      "body": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "button": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "600"
+      },
+      "caption": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "18px",
+        "size": "12px",
+        "weight": "400"
+      },
+      "formFirstOnMobile": false,
+      "heading": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "32.5px",
+        "size": "26px",
+        "weight": "600"
+      },
+      "input": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "22.5px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "interLoaded": true,
+      "label": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "21px",
+        "size": "14px",
+        "weight": "500"
+      },
+      "overflow": false,
+      "welcome": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "46.4px",
+        "size": "40px",
+        "weight": "650"
+      },
+      "width": 768
+    },
+    {
+      "body": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "button": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "600"
+      },
+      "caption": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "18px",
+        "size": "12px",
+        "weight": "400"
+      },
+      "formFirstOnMobile": true,
+      "heading": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "30.0267px",
+        "size": "24.0213px",
+        "weight": "600"
+      },
+      "input": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "22.5px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "interLoaded": true,
+      "label": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "21px",
+        "size": "14px",
+        "weight": "500"
+      },
+      "overflow": false,
+      "welcome": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "32.654px",
+        "size": "28.15px",
+        "weight": "650"
+      },
+      "width": 375
+    },
+    {
+      "body": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "button": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "24px",
+        "size": "15px",
+        "weight": "600"
+      },
+      "caption": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "18px",
+        "size": "12px",
+        "weight": "400"
+      },
+      "formFirstOnMobile": true,
+      "heading": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "27.5px",
+        "size": "22px",
+        "weight": "600"
+      },
+      "input": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "22.5px",
+        "size": "15px",
+        "weight": "400"
+      },
+      "interLoaded": true,
+      "label": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "21px",
+        "size": "14px",
+        "weight": "500"
+      },
+      "overflow": false,
+      "welcome": {
+        "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "letterSpacing": "normal",
+        "lineHeight": "32.48px",
+        "size": "28px",
+        "weight": "650"
+      },
+      "width": 320
+    }
+  ],
+  "scope": {
+    "body": "Arial, Helvetica, sans-serif",
+    "header": "Arial, Helvetica, sans-serif",
+    "page": "/auth/register",
+    "registration": "Arial, Helvetica, sans-serif"
+  },
+  "validation": {
+    "fontSize": "13px",
+    "firstInvalidFocus": "email",
+    "horizontalOverflow": false
+  }
+}
