@@ -1,3 +1,6 @@
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import {
   ChangeDetectorRef,
   Component,
@@ -14,7 +17,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

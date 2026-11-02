@@ -59,7 +59,8 @@ public class SecurityConfig {
                         .requestMatchers(org.springframework.http.HttpMethod.POST,"/api/webhooks/payments").permitAll()
 
                         .requestMatchers(org.springframework.http.HttpMethod.GET,
-                                "/api/products", "/api/products/*", "/api/categories", "/api/product-images/**").permitAll()
+                                "/api/products", "/api/products/*", "/api/categories", "/api/product-images/**",
+                                "/api/docs", "/api/docs.yaml", "/api/docs/**", "/api/swagger-ui", "/api/swagger-ui/**").permitAll()
 
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 

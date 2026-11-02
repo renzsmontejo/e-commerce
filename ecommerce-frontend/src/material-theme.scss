@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: (primary: mat.$violet-palette, theme-type: light),
+    typography: Arial,
+    density: 0,
+  ));
+  @include mat.theme-overrides((primary: #5140dc, on-primary: #ffffff));
+}

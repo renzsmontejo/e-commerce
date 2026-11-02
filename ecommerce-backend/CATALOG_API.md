@@ -61,4 +61,7 @@ Errors: 400 invalid body/query/image or missing category/brand; 401 unauthentica
 
 ## Existing legacy database
 
-The inspected local database has extra required `products.brand` and `products.is_featured` columns, and a non-null description, unlike the current entity/schema dump. Apply `src/main/resources/db/migration/002_legacy_product_defaults.sql` to that legacy schema before creating products. It adds defaults for the unused columns and allows an omitted description without changing existing values. Fresh schemas created from the current entity/schema dump do not need this script. The script was applied to the local Docker database during verification.
+The inspected local database has extra legacy product columns. Flyway's conditional V2 compatibility migration adds defaults for unused required columns and permits an omitted description without changing existing values. Fresh schemas are created by V1. The former manual script is archived under `src/main/resources/db/legacy/002_legacy_product_defaults.sql` for historical reference.
+
+
+Flyway now applies the conditional V2 Java migration automatically, including the legacy defaults above. The archived manual script is retained under `db/legacy` and should not be applied separately on a Flyway-managed database. Hibernate validates instead of updating the schema.

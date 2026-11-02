@@ -19,7 +19,7 @@ import static com.example.ecommerce.product.dto.ProductDtos.*;
 @SpringBootTest
 @TestPropertySource(properties={"app.jwt.secret=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=", "logging.level.org.springframework.security=WARN"})
 @Transactional
-class CatalogIntegrationTests {
+class CatalogIntegrationTests extends com.example.ecommerce.support.MySqlIntegrationTest {
     @Autowired ProductService catalog;
     @Autowired com.example.ecommerce.category.service.CategoryService categoryService;
     @Autowired ProductsRepository products;

@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(properties={"app.jwt.secret=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=", "logging.level.org.springframework.security=WARN"})
 @Transactional
-class CartCheckoutIntegrationTests {
+class CartCheckoutIntegrationTests extends com.example.ecommerce.support.MySqlIntegrationTest {
     @Autowired CartService carts;
     @Autowired CheckoutService checkout;
     @Autowired CartsRepository cartRepository;

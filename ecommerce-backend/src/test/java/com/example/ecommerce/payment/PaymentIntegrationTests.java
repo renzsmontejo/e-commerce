@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @TestPropertySource(properties={"app.jwt.secret=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","logging.level.org.springframework.security=WARN"})
 @Transactional
-class PaymentIntegrationTests {
+class PaymentIntegrationTests extends com.example.ecommerce.support.MySqlIntegrationTest {
     @Autowired PaymentService service;
     @Autowired com.example.ecommerce.order.service.OrderService orderService;
     @Autowired PaymentsRepository payments;

@@ -1,10 +1,14 @@
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-account',
+  imports: [MatButtonModule, MatCardModule],
   template: `
     <main aria-labelledby="account-title">
+      <mat-card appearance="outlined"><mat-card-content>
       <h1 id="account-title">Your account</h1>
       <p role="status">You’re signed in.</p>
       <dl>
@@ -16,7 +20,8 @@ import { AuthService } from '../../core/auth/auth.service';
       @if (auth.notice() === 'forbidden') {
         <p role="alert">You don’t have permission to access that resource.</p>
       }
-      <button type="button" (click)="auth.logout()">Sign out</button>
+      <button mat-flat-button type="button" (click)="auth.logout()">Sign out</button>
+      </mat-card-content></mat-card>
     </main>
   `,
   styles: `
@@ -24,9 +29,9 @@ import { AuthService } from '../../core/auth/auth.service';
       width: min(100% - 2 * var(--space-5), 34rem);
       max-width: 34rem;
       margin: 3rem auto;
-      padding: var(--space-5);
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+
+
+
       border-radius: var(--radius-card);
     }
     h1 {

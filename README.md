@@ -1,58 +1,47 @@
-# e-commerce
+# E-commerce
 
-## Backend build
+Angular 21 / TypeScript / Angular Material frontend and Spring Boot 4.1 / Java 27 backend, with Spring Security, JPA/Hibernate, MySQL 8, Flyway, Jakarta validation, JUnit/Mockito/Testcontainers, OpenAPI/Swagger UI, local product-image storage, and Docker/Nginx deployment.
 
-Use JDK 27 and the included Maven wrapper (Maven 3.10.0). Spring Boot
-4.1.2 manages the Spring dependencies and Lombok 1.18.48; Connector/J is
-updated separately in `ecommerce-backend/pom.xml`.
+## Project layout
 
-In PowerShell, select your installed JDK before building:
+- `ecommerce-backend/src/main/java/com/example/ecommerce`: feature packages for auth, user, product, category, cart, order, payment, inventory, review, and report; shared config/security/common packages.
+- `ecommerce-backend/src/main/resources/application.yml`: environment-backed configuration.
+- `ecommerce-backend/src/main/resources/db/migration`: versioned SQL migrations. The conditional Java migration is in `src/main/java/db/migration`.
+- `ecommerce-backend/src/main/resources/db/legacy`: archived manual scripts, outside Flyway's scan path.
+- `ecommerce-frontend/src/app`: core auth/guards/interceptors/services, shared components/models/pipes, and feature folders. Authentication forms use Material fields, inputs, errors, hints, and buttons; the account uses a Material card.
+
+## Backend development and tests
+
+Use an installed JDK 27 and keep Docker Desktop running. For PowerShell:
 
 ```powershell
 $env:JAVA_HOME = 'C:\Program Files\Java\jdk-27.0.1.0.2'
 cd ecommerce-backend
-.\mvnw.cmd -version
-.\mvnw.cmd verify '-Dspring.jpa.hibernate.ddl-auto=none' '-Dlogging.level.org.springframework.security=INFO'
+.\mvnw.cmd clean verify
 ```
 
-In IntelliJ IDEA, select JDK 27 for both the project SDK and the Maven
-importer/runner, then reload all Maven projects. Setting `java.version` in
-the POM selects the compiler target; it does not select the JDK running Maven.
+Integration tests start a disposable MySQL 8.0.46 container, run Flyway, and validate the schema. They do not connect to the application database on port 3308. The migration test upgrades a separate disposable legacy schema and checks preserved user/product values. The concurrency tests use committed temporary fixtures inside the test container and clean them up. Docker is required; integration tests are not silently skipped.
 
-## JWT signing key
-
-Running the application requires `JWT_SECRET`, a Base64-encoded random
-key of at least 32 bytes. For a local PowerShell session, run this from `ecommerce-backend`:
+To run the backend locally, start MySQL and provide DB_URL, DB_USERNAME, DB_PASSWORD, and JWT_SECRET. Defaults point to `ecommerce_db` on localhost:3308. JWT_SECRET must be a Base64-encoded random key of at least 32 bytes. Generate a development key in the backend shell:
 
 ```powershell
-$jwtKey = New-Object byte[] 32
-$jwtRandom = [System.Security.Cryptography.RandomNumberGenerator]::Create()
-$jwtRandom.GetBytes($jwtKey)
+$jwtBytes = New-Object byte[] 32
+$jwtRandom = [Security.Cryptography.RandomNumberGenerator]::Create()
+$jwtRandom.GetBytes($jwtBytes)
 $jwtRandom.Dispose()
-$env:JWT_SECRET = [Convert]::ToBase64String($jwtKey)
-.\mvnw.cmd spring-boot:run '-Dspring-boot.run.arguments=--spring.jpa.hibernate.ddl-auto=none --logging.level.org.springframework.security=INFO'
+$env:JWT_SECRET = [Convert]::ToBase64String($jwtBytes)
+.\mvnw.cmd spring-boot:run
 ```
 
-For deployments, supply a persistent secret through the environment; changing
-the key invalidates existing tokens. The context test generates its own temporary
-key and does not require this environment variable.
+Preserve the JWT key across deployed restarts. Configure SMTP for password recovery and PayMongo keys for online payments; see the API guides below.
 
-## Run the authentication UI
+## Flyway migrations
 
-Select your installed JDK 27 path above. Start MySQL first; the backend reads
-`DB_URL`, `DB_USERNAME` and `DB_PASSWORD`, with local defaults in
-`ecommerce-backend/src/main/resources/application.yml`. The default database is
-`ecommerce_db` on localhost port 3308. Full backend verification includes a
-context test that requires access to this database. The commands above disable
-automatic schema updates.
+Flyway owns schema changes; Hibernate uses `ddl-auto: validate`. Startup runs V1 (canonical schema, creates missing tables without drops), V2 (conditional compatibility for legacy user/product columns), then V3 (CUSTOMER/ADMIN role seeds, with no default user credentials). Previously applied versions are validated and are not rerun. Add new migrations instead of editing applied ones. Flyway clean is disabled.
 
-For legacy user tables matching the inspected schema, apply
-`ecommerce-backend/src/main/resources/db/migration/001_registration_user_columns.sql` explicitly before registration.
-It enables generated user IDs and allows NULL in the unused legacy password
-column while retaining `password_hash`. The current local database is already
-migrated. This script is not an initial schema or an automatic migration runner.
+Fresh databases migrate automatically. The inspected local database already had an empty Flyway history table and can migrate without a baseline. For another existing database without history, back it up and inspect the schema first. Only for that explicit initial adoption, set FLYWAY_BASELINE_ON_MIGRATE=true (baseline version 0), then remove the override. Automatic baseline is disabled by default to avoid accepting an unintended database. Legacy compatibility preserves existing rows and unused legacy values.
 
-With the backend running on port 8080, open a second PowerShell terminal:
+## Frontend development
 
 ```powershell
 cd ecommerce-frontend
@@ -60,109 +49,47 @@ npm ci
 npm start
 ```
 
-Open `http://127.0.0.1:4200/auth/login` or `/auth/register`. The development proxy
-forwards `/api/**` to Spring Boot. Registration creates a CUSTOMER account and
-offers sign-in. Successful login opens `/account`; ADMIN roles are confirmed by
-the server, and `/api/admin/**` requires ADMIN.
-
-## Frontend checks
+Open `http://localhost:4200/auth/login` or `/auth/register`. The Angular development proxy forwards `/api/**` (including Swagger assets) to port 8080. The Material theme is defined in `src/material-theme.scss`; layout styling stays responsive. Reactive Forms and HttpClient remain the form and API layers.
 
 ```powershell
-cd ecommerce-frontend
 npm run build
 npm test -- --watch=false
 ```
 
-The production frontend is written to `ecommerce-frontend/dist/frontend/browser`; Maven
-verification packages the backend at `ecommerce-backend/target/e-commerce-0.0.1-SNAPSHOT.jar`.
-The existing Nginx configuration expects a backend host named `ecommerce-backend`
-on port 8080. No lint task or automated browser-test runner is configured.
+The production build is written to `ecommerce-frontend/dist/frontend/browser`. Sessions use in-memory JWTs and end on page refresh. Reserved feature folders do not add unimplemented routes.
 
-Sessions use an in-memory JWT and end on page refresh. Client logout clears that
-state; issued tokens expire after 15 minutes and are not revoked on logout.
-Password recovery, social login, persistent sign-in and refresh restoration are
-not implemented. The storefront and admin product-management UI remain future work.
+## API documentation
 
-See `ecommerce-frontend/AUTH_ARCHITECTURE.md` and the batch reports under `ecommerce-frontend/review/`
-for architecture, file inventories, screenshots and validation evidence.
+With the backend running:
 
-## Rebuild the local Docker backend after API changes
+- Swagger UI: `http://localhost:8080/api/swagger-ui`
+- OpenAPI JSON: `http://localhost:8080/api/docs`
+- With the Docker frontend: `http://localhost:4200/api/swagger-ui`
 
-The backend container must be rebuilt after Java changes. A container built from
-older code can redirect `/api/auth/*` requests to Spring's default `/login` page.
+Swagger has an Authorize action for bearer JWTs. Public auth/catalog/webhook operations are documented without bearer authentication; the PayMongo signature header is documented separately. Protected APIs still enforce authentication and ADMIN roles. The relative API server URL works through the reverse proxy.
 
-After packaging with JDK 27 (`mvn package -DskipTests` from `backend`), build:
+Endpoint guides:
+
+- [Authentication](ecommerce-backend/AUTH_API.md)
+- [Products and categories](ecommerce-backend/CATALOG_API.md)
+- [Cart and checkout](ecommerce-backend/CART_CHECKOUT_API.md)
+- [Orders and PayMongo](ecommerce-backend/ORDERS_PAYMENTS_API.md)
+
+## Docker deployment
+
+The source Dockerfiles build the frontend and backend. For an already packaged backend JAR, use:
 
 ```powershell
-docker build -f ecommerce-backend/Dockerfile.runtime -t ecommerce-backend:auth-fix ecommerce-backend
+docker build -f ecommerce-backend/Dockerfile.runtime -t ecommerce-backend:stack ecommerce-backend
+docker build -t ecommerce-frontend:material ecommerce-frontend
 ```
 
-Run this image on `ecommerce-network` with the name `ecommerce-backend`, port
-`8080:8080`, the existing `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, and a random
-Base64 `JWT_SECRET` of at least 32 bytes. Preserve that key across restarts.
-Use `SPRING_JPA_HIBERNATE_DDL_AUTO=none` for the existing migrated database.
-The runtime Dockerfile uses Java 27 and copies the packaged JAR. Its separate
-ignore file includes only that JAR in the build context.
+Run the backend on `ecommerce-network` as `ecommerce-backend`, publishing 8080, with the database/JWT/SMTP/PayMongo environment preserved. Mount `ecommerce-product-images` at `/app/uploads/product-images`. Ensure old environment overrides do not set Hibernate back to update/none: use SPRING_JPA_HIBERNATE_DDL_AUTO=validate. Run the frontend as `ecommerce-frontend`, publishing `4200:80`, on the same network. Nginx forwards API and Swagger assets, supports Angular routing, and accepts batch image uploads up to 51 MiB.
 
-After replacing the backend container, reload Nginx so it resolves the new
-container address:
+After replacing the backend container, reload the frontend proxy to refresh its upstream address:
 
 ```powershell
 docker exec ecommerce-frontend nginx -s reload
 ```
 
-Verify through the frontend at `http://localhost:4200/api/auth/login`: an empty
-JSON POST should return 400, with no redirect or `WWW-Authenticate: Basic` header.
-An unauthenticated GET to `/api/auth/me` should return 401.
-
-## Products and categories
-
-See [ecommerce-backend/CATALOG_API.md](ecommerce-backend/CATALOG_API.md) for the public catalog,
-ADMIN product management, filter/pagination parameters, multipart image uploads,
-and the legacy product compatibility migration. The local catalog image is
-`ecommerce-backend:catalog`. Mount `ecommerce-product-images` at
-`/app/uploads/product-images` when replacing the backend, and retain the current
-JWT/database settings. The frontend Nginx configuration includes the 51 MiB
-request limit needed for batch image uploads.
-
-
-## Project structure
-
-The applications live in `ecommerce-backend/` and `ecommerce-frontend/`.
-
-The backend root package is `com.example.ecommerce`. Each business feature owns
-its `model/` and `repository/` packages plus any implemented `controller/`,
-`service/`, and `dto/` packages. Features are `auth`, `user`, `product`, `category`,
-`cart`, `order`, `payment`, `inventory`, `review`, and `report`. Shared error
-handling and enums live in `common`; application/security configuration lives in
-`config` and JWT support in `security`. Product image storage lives in
-`product/storage`. Category listing has its own controller and service.
-
-Spring configuration is in `ecommerce-backend/src/main/resources/application.yml`.
-The existing compatibility SQL scripts now live in `src/main/resources/db/migration`
-inside that project. They remain explicit legacy-schema migrations; moving them
-has not enabled automatic Flyway execution or changed their application history.
-
-Angular keeps authentication state in `core/auth`, route guards in `core/guards`,
-HTTP interceptors in `core/interceptors`, and API configuration in `core/services`.
-Reusable layout components and data models live in `shared/components` and
-`shared/models`. Authentication pages remain in `features/auth` alongside the
-requested feature folders. Empty feature and pipe folders are reserved with
-`.gitkeep` files; they do not add routes or unfinished UI.
-
-
-## Cart and checkout
-
-See [ecommerce-backend/CART_CHECKOUT_API.md](ecommerce-backend/CART_CHECKOUT_API.md)
-for the authenticated cart endpoints, checkout preview, and transactional order
-placement. Cart code lives in `cart/`; checkout and order code live in `order/`.
-Configure `CHECKOUT_SHIPPING_FEE` and `CHECKOUT_TAX_RATE` for store-specific pricing.
-
-
-## Order lifecycle and payment integration
-
-See [ecommerce-backend/ORDERS_PAYMENTS_API.md](ecommerce-backend/ORDERS_PAYMENTS_API.md)
-for history, cancellation, admin status transitions, and the payment integration
-contract. Order lifecycle and PayMongo Checkout v2 are implemented. Set `PAYMONGO_SECRET_KEY`
-and `PAYMONGO_WEBHOOK_SECRET` on the backend; payment routes return 503 while keys
-are absent. Configure a public HTTPS webhook endpoint in the PayMongo dashboard.
+Take a database backup before deploying new migrations. Retain image volumes and the JWT key when recreating containers. The local stack uses MySQL 8 on port 3308; the isolated test database uses a dynamically assigned port.

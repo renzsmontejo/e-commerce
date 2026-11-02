@@ -1,3 +1,7 @@
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import {
   ChangeDetectorRef,
   Component,
@@ -29,7 +33,7 @@ const bcryptLength = (control: AbstractControl): ValidationErrors | null =>
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -84,6 +88,11 @@ export class Register {
           : { mismatch: true },
     },
   );
+
+  protected readonly confirmErrorStateMatcher: ErrorStateMatcher = {
+    isErrorState: (control, form) => !!(control && (control.touched || form?.submitted)
+      && (control.invalid || control.parent?.hasError('mismatch'))),
+  };
 
   protected fieldError(key: keyof typeof this.form.controls): string {
     const control = this.form.controls[key];

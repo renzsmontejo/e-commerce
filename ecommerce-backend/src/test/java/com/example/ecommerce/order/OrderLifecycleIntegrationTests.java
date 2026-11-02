@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(properties={"app.jwt.secret=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","logging.level.org.springframework.security=WARN"})
 @Transactional
-class OrderLifecycleIntegrationTests {
+class OrderLifecycleIntegrationTests extends com.example.ecommerce.support.MySqlIntegrationTest {
     @Autowired OrderService service;
     @Autowired com.example.ecommerce.payment.service.PaymentService paymentService;
     @Autowired JdbcTemplate jdbc;
