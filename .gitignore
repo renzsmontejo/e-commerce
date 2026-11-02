@@ -3,14 +3,19 @@
 *.iml
 
 # Angular
-frontend/node_modules/
-frontend/dist/
-frontend/.angular/
+ecommerce-frontend/node_modules/
+ecommerce-frontend/dist/
+ecommerce-frontend/.angular/
 
 # Spring Boot
-backend/target/
+ecommerce-backend/target/
 
 # Environment
 .env
 .env.*
 !.env.example
+# Runtime product uploads
+ecommerce-backend/uploads/
+
+# Local verification output
+.verification/

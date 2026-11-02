@@ -1,0 +1,22 @@
+UPDATE THE SPRINGBOOT DOCKER CONTAINER
+
+STEP 1 : OPEN THE PROJECT
+    cd C:\Users\rens\pers-web\e-commerce
+
+STEP 2 : BUILD THE UPDATED BACKEND IMAGE
+    docker build -t ecommerce-backend:updated ./ecommerce-backend
+
+STEP 3 : REMOVE THE OLD BACKEND CONTAINER
+    docker rm -f ecommerce-backend
+
+STEP 4 : RUN THE UPDATED BACKEND
+    docker run -d --name ecommerce-backend --restart unless-stopped --network ecommerce-network -p 8080:8080 ecommerce-backend:updated
+
+STEP 5 : VERIFY
+    docker ps --filter "name=ecommerce-backend"
+
+
+Fastest way for future backend updates
+Once you've confirmed the correct runtime settings, you can use this PowerShell command:
+
+    docker build -t ecommerce-backend:updated ./ecommerce-backend; if ($LASTEXITCODE -eq 0) { docker rm -f ecommerce-backend 2>$null; docker run -d --name ecommerce-backend --restart unless-stopped --network ecommerce-network -p 8080:8080 ecommerce-backend:updated }

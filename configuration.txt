@@ -12,7 +12,7 @@ cd C:\Users\rens\pers-web\e-commerce
 
 
 Run:
-docker build -t ecommerce-frontend:updated ./frontend
+docker build -t ecommerce-frontend:updated ./ecommerce-frontend
 
 
 Wait until the build completes successfully.

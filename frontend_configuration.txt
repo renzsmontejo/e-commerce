@@ -1,0 +1,15 @@
+rebuild, replace, and run your Angular frontend Docker container
+-----------------------------------------------------------------------------------
+cd C:\Users\rens\pers-web\e-commerce
+----------------------------------------------------------------------------------
+docker build -t ecommerce-frontend:updated ./ecommerce-frontend
+----------------------------------------------------------------------------------
+docker rm -f ecommerce-frontend
+----------------------------------------------------------------------------------
+docker run -d --name ecommerce-frontend --restart unless-stopped --network ecommerce-network -p 4200:80 ecommerce-frontend:updated
+----------------------------------------------------------------------------------
+docker build -t ecommerce-frontend:updated ./ecommerce-frontend; if ($LASTEXITCODE -eq 0) { docker rm -f ecommerce-frontend 2>$null; docker run -d --name ecommerce-frontend --restart unless-stopped --network ecommerce-network -p 4200:80 ecommerce-frontend:updated }
+----------------------------------------------------------------------------------
+docker ps --filter "name=ecommerce-frontend"
+----------------------------------------------------------------------------------
+docker logs --tail 50 ecommerce-frontend
