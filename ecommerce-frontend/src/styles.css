@@ -11,7 +11,7 @@ body {
   margin: 0;
   background: var(--color-background);
   color: var(--color-text);
-  font-family: var(--font-body);
+  font-family: 'Inter', 'system-ui', sans-serif;
   line-height: 1.5;
 }
 button,

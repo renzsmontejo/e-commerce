@@ -19,6 +19,7 @@ describe('Authentication integration', () => {
         provideHttpClientTesting(),
       ],
     });
+    sessionStorage.clear();
     auth = TestBed.inject(AuthService);
     http = TestBed.inject(HttpTestingController);
     client = TestBed.inject(HttpClient);
@@ -112,8 +113,37 @@ describe('Authentication integration', () => {
       '/account/../auth/login',
       '/%2f%2fevil.example',
     ])
-      expect(safeReturnUrl(url)).toBe('/account');
+      expect(safeReturnUrl(url)).toBe('/home');
+    expect(safeReturnUrl('/home?category=accessories')).toBe('/home?category=accessories');
     expect(safeReturnUrl('/account?tab=orders#recent')).toBe('/account?tab=orders#recent');
+  });
+
+  it('restores a tab session only after server verification', async () => {
+    const token = signIn();
+    const freshAuth = TestBed.runInInjectionContext(() => new AuthService());
+    expect(freshAuth.accessToken()).toBeNull();
+    const restored = freshAuth.restoreSession();
+    const me = http.expectOne('/api/auth/me');
+    expect(me.request.headers.get('Authorization')).toBe(`Bearer ${token}`);
+    me.flush(account);
+    await restored;
+    expect(freshAuth.accessToken()).toBe(token);
+    freshAuth.logout();
+    expect(sessionStorage.getItem('ecommerce.accessToken')).toBeNull();
+  });
+
+  it('rejects stored tokens that are expired or rejected by the server', async () => {
+    sessionStorage.setItem('ecommerce.accessToken', 'invalid');
+    await auth.restoreSession();
+    expect(auth.accessToken()).toBeNull();
+    http.expectNone('/api/auth/me');
+    const token = `h.${btoa(JSON.stringify({ exp: Date.now() / 1000 + 900 }))}.s`;
+    sessionStorage.setItem('ecommerce.accessToken', token);
+    const restored = auth.restoreSession();
+    http.expectOne('/api/auth/me').flush({}, { status: 401, statusText: 'Unauthorized' });
+    await restored;
+    expect(auth.accessToken()).toBeNull();
+    expect(sessionStorage.getItem('ecommerce.accessToken')).toBeNull();
   });
 
   it('ignores stale 401 and 403 responses from a previous session', () => {

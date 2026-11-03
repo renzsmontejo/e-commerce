@@ -1,0 +1,86 @@
+:host {
+  --navy: #14123f;
+  --ink: #0f0f1a;
+  --muted: #5d5d70;
+  --radius-hero: 14px;
+  display: block;
+  background: #fff;
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.page { width: min(1200px, 100% - 48px); margin-inline: auto; padding: 22px 0 56px; }
+
+.btn {
+  display: inline-block; padding: 9px 16px; border-radius: 6px;
+  background: #fff; color: #000; font-size: 11px; font-weight: 600; text-decoration: none;
+  box-shadow: 0 1px 2px rgb(0 0 0 / .08);
+  transition: transform .15s, box-shadow .15s;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgb(0 0 0 / .15); }
+.btn:focus-visible, .tile:focus-visible { outline: 2px solid #7c83f7; outline-offset: 3px; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 2.06fr 1fr; gap: 20px; height: 480px; }
+
+.hero__main, .hero__side { position: relative; overflow: hidden; border-radius: var(--radius-hero); }
+
+.hero__main { background: linear-gradient(180deg, #b7c1cd 0%, #a8b4c2 55%, #c9ccd0 100%); }
+.hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+.hero__copy { position: relative; z-index: 1; padding-top: 52px; text-align: center; }
+.hero__copy h1 {
+  margin: 0 0 22px; font-size: clamp(28px, 3.6vw, 42px); font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; color: #0c0c1b;
+}
+.hero__copy em {
+  font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400;
+  letter-spacing: -0.01em; color: #4a4d58; font-size: 1.1em;
+}
+
+.hero__side { background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; }
+.hero__side-copy { text-align: center; padding-top: 32px; position: relative; z-index: 1; }
+.kicker { margin: 0 0 6px; font-size: 11px; font-weight: 400; }
+.hero__side h2 { margin: 0 0 18px; font-size: clamp(26px, 2.8vw, 34px); font-weight: 500; letter-spacing: -0.02em; }
+.hero__phone { position: absolute; bottom: -8px; left: 50%; translate: -50% 0; width: 74%; max-width: 300px; object-fit: contain; }
+
+/* Perks */
+.perks {
+  display: grid; grid-template-columns: repeat(4, 1fr); margin: 34px 0 0; padding: 0; list-style: none;
+}
+.perk { display: flex; align-items: center; gap: 10px; padding: 4px 0 4px 22px; position: relative; }
+.perk:first-child { padding-left: 0; }
+.perk:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 50%; translate: 0 -50%; height: 20px; width: 1px; background: #e4e4ea;
+}
+.perk__icon { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; }
+.perk__text { display: flex; flex-direction: column; gap: 3px; }
+.perk__text strong { font-size: 12px; font-weight: 600; color: var(--navy); }
+.perk__text small { font-size: 10.500px; color: var(--muted); }
+
+/* Categories */
+.categories { margin-top: 42px; }
+.categories h2 { margin: 0 0 18px; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+.categories__grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.tile {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  height: 100px; padding: 10px 6px; border-radius: 10px; color: var(--ink); text-decoration: none;
+  font-size: 11px; font-weight: 500; text-align: center;
+}
+.tile img { height: 42px; width: auto; max-width: 70%; object-fit: contain; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .categories__grid { grid-template-columns: repeat(4, 1fr); }
+  .perks { grid-template-columns: repeat(2, 1fr); row-gap: 18px; }
+  .perk:nth-child(2)::after { display: none; }
+  .perk:nth-child(3) { padding-left: 0; }
+}
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; height: auto; }
+  .hero__main { height: 360px; }
+  .hero__side { height: 380px; }
+  .perks { grid-template-columns: 1fr; }
+  .perk::after { display: none; }
+  .perk { padding-left: 0; }
+  .categories__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }

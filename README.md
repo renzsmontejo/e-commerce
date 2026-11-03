@@ -56,7 +56,7 @@ npm run build
 npm test -- --watch=false
 ```
 
-The production build is written to `ecommerce-frontend/dist/frontend/browser`. Sessions use in-memory JWTs and end on page refresh. Reserved feature folders do not add unimplemented routes.
+The production build is written to `ecommerce-frontend/dist/frontend/browser`. JWTs are held in memory and persisted in tab-scoped sessionStorage to support refresh (JavaScript can access this storage). Startup verifies the token with `/api/auth/me` before restoring authentication; invalid/expired tokens and logout clear it. If browser storage is unavailable, authentication remains memory-only. Reserved feature folders do not add unimplemented routes.
 
 ## API documentation
 

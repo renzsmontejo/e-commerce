@@ -1,3 +1,4 @@
+import { AuthService } from '../../../../core/auth/auth.service';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
@@ -48,7 +49,14 @@ describe('Login page API wiring', () => {
     expect(root.querySelector<HTMLButtonElement>('.sign-in')!.disabled).toBe(false);
     http.verify();
   });
-  it('redirects a successful login to the safe account destination', () => {
+  it.each([
+    [null, '/home'],
+    ['//evil.example', '/home'],
+    ['/account?tab=orders', '/account?tab=orders'],
+  ])('redirects a customer login from %s to %s', (returnUrl, expected) => {
+    TestBed.overrideProvider(ActivatedRoute, {
+      useValue: { snapshot: { queryParamMap: convertToParamMap({ returnUrl }) } },
+    });
     const fixture = TestBed.createComponent(LoginPage);
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
     fixture.detectChanges();
@@ -67,8 +75,11 @@ describe('Login page API wiring', () => {
     http
       .expectOne('/api/auth/login')
       .flush({ accessToken: token, tokenType: 'Bearer', userId: 1, email: 'admin@example.com' });
-    http.expectOne('/api/auth/me').flush({ id: 1, email: 'admin@example.com', roles: ['ADMIN'] });
-    expect(navigate).toHaveBeenCalledWith('/account');
+    http
+      .expectOne('/api/auth/me')
+      .flush({ id: 1, email: 'admin@example.com', roles: ['CUSTOMER'] });
+    expect(navigate).toHaveBeenCalledWith(expected);
+    TestBed.inject(AuthService).logout();
     http.verify();
   });
 });
